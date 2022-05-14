@@ -49,14 +49,14 @@ export class OrgChart {
                     ${visibleConnections.map(conn => {
                     const labelWidth = this.getTextWidth(conn.label, { ctx: state.ctx, fontSize: 2, defaultFont: state.defaultFont });
                     return `
-                       <marker id="${conn.from + "_" + conn.to}" refX="${conn._source.x < conn._target.x ? -7 : 7}" refY="5" markerWidth="500"  markerHeight="500"  orient="${conn._source.x < conn._target.x ? "auto" : "auto-start-reverse"}" >
-                       <rect rx=0.5 width=${conn.label ? labelWidth + 3 : 0} height=3 y=1  fill="#152785"></rect>
-                       <text font-size="2px" x=1 fill="white" y=3>${conn.label || ''}</text>
-                       </marker>
+                        <marker id="${conn.from + "_" + conn.to}" refX="${conn._source.x < conn._target.x ? -7 : 7}" refY="5" markerWidth="500"  markerHeight="500"  orient="${conn._source.x < conn._target.x ? "auto" : "auto-start-reverse"}" >
+                        <rect rx=0.5 width=${conn.label ? labelWidth + 3 : 0} height=3 y=1  fill="#152785"></rect>
+                        <text font-size="2px" x=1 fill="white" y=3>${conn.label || ''}</text>
+                        </marker>
 
-                       <marker id="arrow-${conn.from + "_" + conn.to}"  markerWidth="500"  markerHeight="500"  refY="2"  refX="1" orient="${conn._source.x < conn._target.x ? "auto" : "auto-start-reverse"}" >
-                       <path transform="translate(0)" d='M0,0 V4 L2,2 Z' fill='#152785' />
-                       </marker>
+                        <marker id="arrow-${conn.from + "_" + conn.to}"  markerWidth="500"  markerHeight="500"  refY="2"  refX="1" orient="${conn._source.x < conn._target.x ? "auto" : "auto-start-reverse"}" >
+                        <path transform="translate(0)" d='M0,0 V4 L2,2 Z' fill='#152785' />
+                        </marker>
                     `}).join("")}
                     </defs>
                     `},
@@ -1418,15 +1418,17 @@ export class OrgChart {
     }
 
     // Zoom in exposed method
-    zoomIn() {
+    // @param percent - optional parameter, if not specified, zoom in by default 30%
+    zoomIn(percent) {
         const { svg, zoomBehavior } = this.getChartState();
-        svg.transition().call(zoomBehavior.scaleBy, 1.3);
+        svg.transition().call(zoomBehavior.scaleBy, percent || 1.3);
     }
 
     // Zoom out exposed method
-    zoomOut() {
+    // @param percent - optional parameter, if not specified, zoom out by 22%
+    zoomOut(percent) {
         const { svg, zoomBehavior } = this.getChartState();
-        svg.transition().call(zoomBehavior.scaleBy, 0.78);
+        svg.transition().call(zoomBehavior.scaleBy, percent || 0.78);
     }
 
     toDataURL(url, callback) {
