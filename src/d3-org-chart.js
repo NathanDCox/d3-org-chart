@@ -89,7 +89,7 @@ export class OrgChart {
             nodeHeight: d => 150,
             siblingsMargin: d3Node => 20,
             childrenMargin: d => 60,
-            neightbourMargin: (n1, n2) => 80,
+            neighbourMargin: (n1, n2) => 80,
             compactMarginPair: d => 100,
             compactMarginBetween: (d3Node => 20),
             onNodeClick: (d) => d,
@@ -393,7 +393,7 @@ export class OrgChart {
                 });
             }
         })
-            .spacing((nodeA, nodeB) => nodeA.parent == nodeB.parent ? 0 : attrs.neightbourMargin(nodeA, nodeB));
+            .spacing((nodeA, nodeB) => nodeA.parent == nodeB.parent ? 0 : attrs.neighbourMargin(nodeA, nodeB));
 
         this.setLayouts({ expandNodesFirst: false });
 
@@ -625,6 +625,7 @@ export class OrgChart {
 
     // This function basically redraws visible graph, based on nodes state
     update({ x0, y0, x = 0, y = 0, width, height }) {
+        console.log(x0, y0, x, y, width, height)
         const attrs = this.getChartState();
         const calc = attrs.calc;
 
